@@ -25,8 +25,10 @@ function createHTML() {
 
         col3.attr("class", "col-1 saveBtn");
         col3.attr("id", "button" + (i - 9));
+
         col3Glyph.attr("class", "fas fa-save");
         col3Glyph.attr("id", "glyph" + (i - 9));
+
         if (i < 13) {
             if (i == 12) {
                 col1.text(i + "PM");
@@ -51,9 +53,18 @@ function saveToLocalStorage(rowNum) {
     localStorage.setItem(localStorageName, $(localStorageValue).val());
 }
 
-createHTML();
+function populateTextareas() {
+    for(let i = 0; i < localStorage.length; i++) {
+        let textareaId = "#" + localStorage.key(i);
+        let textareaKey = localStorage.key(i);
+        $(textareaId).text(localStorage.getItem(textareaKey));
+    }
+}
 
-$(".saveBtn, ").on("click",  function(event) {
+createHTML();
+populateTextareas();
+
+$(".saveBtn, .fas").on("click",  function(event) {
     event.preventDefault();
     let buttonId = event.target.id;
     saveToLocalStorage(buttonId.slice(-1));
